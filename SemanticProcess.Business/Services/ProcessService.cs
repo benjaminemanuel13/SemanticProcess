@@ -14,7 +14,9 @@ namespace SemanticProcess.Business.Services
 {
     public class ProcessService
     {
-        public async Task Go()
+        public static string OpenAIKey { get; set; } = string.Empty;
+
+        public async Task GoAsync()
         {
             ProcessBuilder processBuilder = new("DocumentationGeneration");
 
@@ -34,7 +36,6 @@ namespace SemanticProcess.Business.Services
                 .OnEvent("DocumentationGenerated")
                 .SendEventTo(new ProcessFunctionTargetBuilder(docsPublishStep, "Publish"));
 
-            string OpenAIKey = Environment.GetEnvironmentVariable("OPENAIKEY");
             string Model = "gpt-4";
 
             Kernel kernel = Kernel
