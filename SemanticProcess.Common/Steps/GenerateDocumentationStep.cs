@@ -54,9 +54,6 @@ namespace SemanticProcess.Common.Steps
             this._state!.LastGeneratedDocument = generatedContent;
 
             await context.EmitEventAsync("DocumentationGenerated", generatedContent);
-
-            //return generatedContent;
         }
-
     }
 }
