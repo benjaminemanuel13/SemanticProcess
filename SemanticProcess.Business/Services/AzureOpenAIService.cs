@@ -30,11 +30,15 @@ namespace SemanticProcess.Business.Services
         {
             var client = _client.GetChatClient(Model);
 
-            var message = ChatMessage.CreateUserMessage(text);
+            List<ChatMessage> messages = new List<ChatMessage>();
 
-            List<ChatMessage> messages = new List<ChatMessage>() {
-                message
-            };
+            if (existingMessages != null)
+            {
+                messages.AddRange(existingMessages);
+            }
+
+            var message = ChatMessage.CreateUserMessage(text);
+            messages.Add(message);
 
             var chat = client.CompleteChat(messages);
 
@@ -45,11 +49,15 @@ namespace SemanticProcess.Business.Services
         {
             var client = _client.GetChatClient(Model);
 
-            var message = ChatMessage.CreateUserMessage(text);
+            List<ChatMessage> messages = new List<ChatMessage>();
 
-            List<ChatMessage> messages = new List<ChatMessage>() {
-                message
-            };
+            if (existingMessages != null)
+            {
+                messages.AddRange(existingMessages);
+            }
+
+            var message = ChatMessage.CreateUserMessage(text);
+            messages.Add(message);
 
             var chat = client.CompleteChatStreaming(messages);
 
