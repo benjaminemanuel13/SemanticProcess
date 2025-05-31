@@ -27,7 +27,7 @@ namespace SemanticProcess.Agents.MultiAgent
         // A good question to ask is: send an email from john doe to jane smith subject "Hello" body "Hello"
         // this will lookup the email addresses in the StaffLookup plugin and send the email using the EmailSender plugin.
 
-        public override async Task<string> Ask(string question)
+        public override async Task<string> AskAsync(string question)
         {
             plugins = DetermineAgents(question, Directory.GetCurrentDirectory());
 

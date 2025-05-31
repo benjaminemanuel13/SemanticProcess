@@ -13,7 +13,7 @@ namespace SemanticProcess.Agents.MultiAgent
     {
         public HumanResourcesAgent() : base(true) { }
 
-        public override async Task<string> Ask(string question)
+        public override async Task<string> AskAsync(string question)
         {
             OpenAIPromptExecutionSettings executionSettings = new() { ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions };
 

@@ -34,7 +34,7 @@ namespace SemanticProcess.Agents.MultiAgent
             return kernel;
         }
 
-        public abstract Task<string> Ask(string question);
+        public abstract Task<string> AskAsync(string question);
 
         protected abstract void AddPlugins();
     }
