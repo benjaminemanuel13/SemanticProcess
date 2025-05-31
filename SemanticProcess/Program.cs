@@ -26,7 +26,6 @@ processBuilder
     .OnInputEvent("Start")
     .SendEventTo(new(infoGatheringStep));
 
-
 infoGatheringStep
     .OnFunctionResult()
     .SendEventTo(new ProcessFunctionTargetBuilder(docsGenerationStep, "GenerateDocument"));
