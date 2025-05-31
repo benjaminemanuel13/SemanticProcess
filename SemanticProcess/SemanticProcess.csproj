@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SemanticProcess.Agents\SemanticProcess.Agents.csproj" />
     <ProjectReference Include="..\SemanticProcess.Business\SemanticProcess.Business.csproj" />
     <ProjectReference Include="..\SemanticProcess.Common\SemanticProcess.Common.csproj" />
   </ItemGroup>

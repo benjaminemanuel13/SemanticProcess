@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
+using SemanticProcess.Agents.MultiAgent;
+using SemanticProcess.Business.Services;
 using SemanticProcess.Common.Steps;
 using System.Reflection;
 
@@ -12,16 +14,18 @@ static void Main(string[] args)
 {
 }
 
-// Create the process builder
+BaseAgent.OpenAIKey = Environment.GetEnvironmentVariable("OPENAIKEY");
+
+AzureOpenAIService.Endpoint = Environment.GetEnvironmentVariable("AZUREOPENAIENDPOINT");
+AzureOpenAIService.Key = Environment.GetEnvironmentVariable("AZUREOPENAIKEY");
+AzureOpenAIService.Model = "gpt-4o-smile";
+
 ProcessBuilder processBuilder = new("DocumentationGeneration");
 
-// Add the steps
 var infoGatheringStep = processBuilder.AddStepFromType<GatherProductInfoStep>();
 var docsGenerationStep = processBuilder.AddStepFromType<GenerateDocumentationStep>();
 var docsPublishStep = processBuilder.AddStepFromType<PublishDocumentationStep>();
 
-
-// Orchestrate the events
 processBuilder
     .OnInputEvent("Start")
     .SendEventTo(new(infoGatheringStep));
