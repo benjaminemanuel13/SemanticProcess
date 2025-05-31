@@ -1,5 +1,5 @@
 ﻿using Microsoft.SemanticKernel;
-using SemanticAgent.Common;
+using SemanticProcess.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.SemanticKernel.Process.LocalRuntime" Version="1.46.0-alpha" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SemanticProcess.Common\SemanticProcess.Common.csproj" />
+  </ItemGroup>
+
 </Project>

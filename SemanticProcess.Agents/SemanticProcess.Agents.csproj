@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SemanticProcess.Business\SemanticProcess.Business.csproj" />
+    <ProjectReference Include="..\SemanticProcess.Common\SemanticProcess.Common.csproj" />
   </ItemGroup>
 
 </Project>
