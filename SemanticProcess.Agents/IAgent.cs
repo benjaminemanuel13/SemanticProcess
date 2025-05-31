@@ -8,6 +8,6 @@ namespace SemanticProcess.Agents
 {
     public interface IAgent
     {
-        Task<string> AskAsync(string question);
+        Task<string> AskAsync(string question, Action<string> del = null);
     }
 }
