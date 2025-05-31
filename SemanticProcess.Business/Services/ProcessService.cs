@@ -40,7 +40,7 @@ namespace SemanticProcess.Business.Services
 
             Kernel kernel = Kernel
                 .CreateBuilder()
-                .AddOpenAIChatCompletion(Model, OpenAIKey)
+                .AddOpenAIChatCompletion(Model, OpenAIKey)                
                 .Build();
 
             // Build and run the process
