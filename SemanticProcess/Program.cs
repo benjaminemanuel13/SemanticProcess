@@ -5,7 +5,7 @@ using SemanticProcess.Business.Services.OrchAgents;
 
 #pragma warning disable CS8601 // Possible null reference assignment.
 ProcessService.OpenAIKey = Environment.GetEnvironmentVariable("OPENAIKEY");
-GroupChatService.OpenAIKey = Environment.GetEnvironmentVariable("OPENAIKEY");
+BaseAgentService.OpenAIKey = Environment.GetEnvironmentVariable("OPENAIKEY");
 BaseAgent.OpenAIKey = Environment.GetEnvironmentVariable("OPENAIKEY");
 
 AssistantService.Endpoint = Environment.GetEnvironmentVariable("AZUREOPENAIENDPOINT");

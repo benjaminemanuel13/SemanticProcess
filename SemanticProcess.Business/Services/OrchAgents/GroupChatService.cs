@@ -20,26 +20,21 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace SemanticProcess.Business.Services.OrchAgents
 {
-    public class GroupChatService
+    public class GroupChatService : BaseAgentService
     {
-        public static string OpenAIKey { get; set; } = string.Empty;
-        public static string Model { get; set; } = "gpt-4";
-
         ChatHistory history = [];
+
+        public GroupChatService(): base() {}
+
 
         public async Task GoAsync()
         {
-            Kernel kernel = Kernel
-                .CreateBuilder()
-                .AddOpenAIChatCompletion(Model, OpenAIKey)
-                .Build();
-
             ChatCompletionAgent writer = new ChatCompletionAgent
             {
                 Name = "CopyWriter",
                 Description = "A copy writer",
                 Instructions = "You are a copywriter with ten years of experience and are known for brevity and a dry humor. The goal is to refine and decide on the single best copy as an expert in the field. Only provide a single proposal per response. You're laser focused on the goal at hand. Don't waste time with chit chat. Consider suggestions when refining an idea.",
-                Kernel = kernel,
+                Kernel = Kernel,
             };
 
             ChatCompletionAgent editor = new ChatCompletionAgent
@@ -47,7 +42,7 @@ namespace SemanticProcess.Business.Services.OrchAgents
                 Name = "Reviewer",
                 Description = "An editor.",
                 Instructions = "You are an art director who has opinions about copywriting born of a love for David Ogilvy. The goal is to determine if the given copy is acceptable to print. If so, state that it is approved. If not, provide insight on how to refine suggested copy without example.",
-                Kernel = kernel,
+                Kernel = Kernel,
             };
 
             // CustomRoundRobinGroupChatManager
