@@ -18,7 +18,6 @@ using System.Threading.Tasks;
 #pragma warning disable SKEXP0110
 #pragma warning disable SKEXP0001
 
-
 namespace SemanticProcess.Business.Services
 {
     public class CodeService
