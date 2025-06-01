@@ -20,7 +20,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace SemanticProcess.Business.Services.OrchAgents
 {
-    public class ChatService
+    public class GroupChatService
     {
         public static string OpenAIKey { get; set; } = string.Empty;
         public static string Model { get; set; } = "gpt-4";

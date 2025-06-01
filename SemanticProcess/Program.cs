@@ -5,7 +5,7 @@ using SemanticProcess.Business.Services.OrchAgents;
 
 #pragma warning disable CS8601 // Possible null reference assignment.
 ProcessService.OpenAIKey = Environment.GetEnvironmentVariable("OPENAIKEY");
-ChatService.OpenAIKey = Environment.GetEnvironmentVariable("OPENAIKEY");
+GroupChatService.OpenAIKey = Environment.GetEnvironmentVariable("OPENAIKEY");
 BaseAgent.OpenAIKey = Environment.GetEnvironmentVariable("OPENAIKEY");
 
 AssistantService.Endpoint = Environment.GetEnvironmentVariable("AZUREOPENAIENDPOINT");
@@ -24,7 +24,7 @@ AzureOpenAIService.Model = "gpt-4o-smile";
 //ProcessService processService = new ProcessService();
 //await processService.GoAsync();
 
-ChatService chatService = new ChatService();
+GroupChatService chatService = new GroupChatService();
 await chatService.GoAsync();
 
 Console.WriteLine("Process completed. Press any key to exit.");
