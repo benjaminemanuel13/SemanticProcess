@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemanticProcess.Common", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemanticProcess.Agents", "SemanticProcess.Agents\SemanticProcess.Agents.csproj", "{7A654C71-DDB4-40AB-A253-707696DDEC84}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemanticProcess.Code", "SemanticProcess.Code\SemanticProcess.Code.csproj", "{6A0A333A-6A53-4C81-802F-07A54F25D849}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{7A654C71-DDB4-40AB-A253-707696DDEC84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A654C71-DDB4-40AB-A253-707696DDEC84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A654C71-DDB4-40AB-A253-707696DDEC84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A0A333A-6A53-4C81-802F-07A54F25D849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A0A333A-6A53-4C81-802F-07A54F25D849}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A0A333A-6A53-4C81-802F-07A54F25D849}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A0A333A-6A53-4C81-802F-07A54F25D849}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
