@@ -1,5 +1,6 @@
 ﻿using Azure.AI.OpenAI;
 using Azure.Identity;
+using Microsoft.Identity.Client;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents.OpenAI;
 using Microsoft.SemanticKernel.ChatCompletion;
@@ -22,15 +23,15 @@ namespace SemanticProcess.Business.Services
 {
     public class CodeService
     {
+        public static string Endpoint { get; set; }
+        public static string Key { get; set; }
+        public static string Model { get; set; }
+
         public async Task GoAsync()
         {
-            var endpoint = Environment.GetEnvironmentVariable("AZUREOPENAIENDPOINT");
-            var key = Environment.GetEnvironmentVariable("AZUREOPENAIKEY");
-            var model = "gpt-4o-smile";
+            ApiKeyCredential credential = new(Key);
 
-            ApiKeyCredential credential = new(key);
-
-            AzureOpenAIClient client = OpenAIAssistantAgent.CreateAzureOpenAIClient(credential, new Uri(endpoint));
+            AzureOpenAIClient client = OpenAIAssistantAgent.CreateAzureOpenAIClient(credential, new Uri(Endpoint));
 
             Console.WriteLine("Uploading files...");
             OpenAIFileClient fileClient = client.GetOpenAIFileClient();
@@ -41,7 +42,7 @@ namespace SemanticProcess.Business.Services
             AssistantClient assistantClient = client.GetAssistantClient();
             Assistant assistant =
                 await assistantClient.CreateAssistantAsync(
-                    model,
+                    Model,
                     name: "SampleAssistantAgent",
                     instructions:
                             """
