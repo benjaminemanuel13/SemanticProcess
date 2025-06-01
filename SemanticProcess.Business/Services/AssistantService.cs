@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace SemanticProcess.Business.Services
 {
-    public class AssistantOpenService
+    public class AssistantService
     {
         public static string Endpoint { get; set; }
         public static string Key { get; set; }
@@ -47,7 +47,7 @@ namespace SemanticProcess.Business.Services
             // Create the agent
             agent = new(assistant, client);
 
-            // Upload file - Using a table of fictional employees.
+            // Upload file
             await using Stream stream = File.OpenRead("employees.pdf")!;
             string fileId = await openClient.UploadAssistantFileAsync(stream, "employees.pdf");
 
@@ -113,7 +113,7 @@ namespace SemanticProcess.Business.Services
             }
         }
 
-        void WriteAgentChatMessage(Microsoft.SemanticKernel.ChatMessageContent message)
+        void WriteAgentChatMessage(Microsoft.SemanticKernel.ChatMessageContent message, Action<string> del = null)
         {
             // Include ChatMessageContent.AuthorName in output, if present.
             string authorExpression = message.Role == AuthorRole.User ? string.Empty : $" - {message.AuthorName ?? "*"}";
