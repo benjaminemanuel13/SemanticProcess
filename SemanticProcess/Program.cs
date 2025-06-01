@@ -8,9 +8,14 @@ ProcessService.OpenAIKey = Environment.GetEnvironmentVariable("OPENAIKEY");
 BaseAgentService.OpenAIKey = Environment.GetEnvironmentVariable("OPENAIKEY");
 BaseAgent.OpenAIKey = Environment.GetEnvironmentVariable("OPENAIKEY");
 
+BaseAgentService.Endpoint = Environment.GetEnvironmentVariable("AZUREOPENAIENDPOINT");
+BaseAgentService.Key = Environment.GetEnvironmentVariable("AZUREOPENAIKEY");
+BaseAgentService.AzureModel = "gpt-4o-smile";
+
 AssistantService.Endpoint = Environment.GetEnvironmentVariable("AZUREOPENAIENDPOINT");
 AssistantService.Key = Environment.GetEnvironmentVariable("AZUREOPENAIKEY");
 AssistantService.Model = "gpt-4o-smile";
+
 
 CodeService.Endpoint = Environment.GetEnvironmentVariable("AZUREOPENAIENDPOINT");
 CodeService.Key = Environment.GetEnvironmentVariable("AZUREOPENAIKEY");
@@ -24,7 +29,10 @@ AzureOpenAIService.Model = "gpt-4o-smile";
 //ProcessService processService = new ProcessService();
 //await processService.GoAsync();
 
-GroupChatService chatService = new GroupChatService();
+//GroupChatService chatService = new GroupChatService();
+//await chatService.GoAsync();
+
+ConcurrentService chatService = new ConcurrentService();
 await chatService.GoAsync();
 
 Console.WriteLine("Process completed. Press any key to exit.");

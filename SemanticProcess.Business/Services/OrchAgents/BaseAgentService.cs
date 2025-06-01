@@ -13,6 +13,11 @@ namespace SemanticProcess.Business.Services.OrchAgents
         public static string OpenAIKey { get; set; } = string.Empty;
         public static string Model { get; set; } = "gpt-4";
 
+        public static string Endpoint { get; set; }
+        public static string Key { get; set; }
+        public static string AzureModel { get; set; }
+
+
         protected Kernel Kernel { get; private set; }
 
         public BaseAgentService() {

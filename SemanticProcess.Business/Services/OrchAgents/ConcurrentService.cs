@@ -1,9 +1,13 @@
 ﻿using Microsoft.SemanticKernel.Agents;
+using Microsoft.SemanticKernel.Agents.OpenAI;
 using Microsoft.SemanticKernel.Agents.Orchestration.Concurrent;
 using Microsoft.SemanticKernel.Agents.Runtime.InProcess;
+using OpenAI.Assistants;
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,24 +26,55 @@ namespace SemanticProcess.Business.Services.OrchAgents
             ChatCompletionAgent physicist = new ChatCompletionAgent
             {
                 Name = "PhysicsExpert",
+                Description = "An expert in physics.",
                 Instructions = "You are an expert in physics. You answer questions from a physics perspective.",
                 Kernel = Kernel,
             };
             ChatCompletionAgent chemist = new ChatCompletionAgent
             {
                 Name = "ChemistryExpert",
+                Description = "An expert in chemistry.",
                 Instructions = "You are an expert in chemistry. You answer questions from a chemistry perspective.",
                 Kernel = Kernel,
             };
 
-            ConcurrentOrchestration orchestration = new(physicist, chemist);
+
+            //---------------------------------------------------
+            //  Azure OpenAI Assistant Agent
+            //---------------------------------------------------
+            ApiKeyCredential credential = new(Key);
+
+            AssistantClient client = OpenAIAssistantAgent.CreateAzureOpenAIClient(credential, new Uri(Endpoint)).GetAssistantClient();
+
+            var openClient = OpenAIAssistantAgent.CreateAzureOpenAIClient(credential, new Uri(Endpoint));
+
+            Dictionary<string, string> metadata = new();
+
+            Assistant assistant =
+                    await client.CreateAssistantAsync(
+                        AzureModel,
+                        description: "An assistant that can answer questions about physics and chemistry.",
+                        instructions:                                 """
+                            Analyze the available data to provide an answer to the user's question.
+                            Always format response using markdown.
+                            Always include a numerical index that starts at 1 for any lists or tables.
+                            Always sort lists in ascending order.
+                            """,
+                        enableFileSearch: true,
+                        metadata: metadata);
+
+            OpenAIAssistantAgent agent = new(assistant, client);
+            //----------------------------------------------------
+            
+
+            ConcurrentOrchestration orchestration = new(physicist, chemist, agent);
 
             InProcessRuntime runtime = new InProcessRuntime();
             await runtime.StartAsync();
 
             var result = await orchestration.InvokeAsync("What is temperature?", runtime);
 
-            string[] output = await result.GetValueAsync(TimeSpan.FromSeconds(20));
+            string[] output = await result.GetValueAsync(TimeSpan.FromSeconds(60));
 
             Console.WriteLine($"# RESULT:\n{string.Join("\n\n", output.Select(text => $"{text}"))}");
 
