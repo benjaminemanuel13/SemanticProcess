@@ -1,4 +1,5 @@
-﻿using Microsoft.SemanticKernel.Agents;
+﻿using Azure.AI.Agents.Persistent;
+using Microsoft.SemanticKernel.Agents;
 using Microsoft.SemanticKernel.Agents.OpenAI;
 using Microsoft.SemanticKernel.Agents.Orchestration.Concurrent;
 using Microsoft.SemanticKernel.Agents.Runtime.InProcess;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 #pragma warning disable OPENAI001
@@ -44,9 +46,8 @@ namespace SemanticProcess.Business.Services.OrchAgents
             //---------------------------------------------------
             ApiKeyCredential credential = new(Key);
 
-            AssistantClient client = OpenAIAssistantAgent.CreateAzureOpenAIClient(credential, new Uri(Endpoint)).GetAssistantClient();
-
             var openClient = OpenAIAssistantAgent.CreateAzureOpenAIClient(credential, new Uri(Endpoint));
+            var client = openClient.GetAssistantClient();
 
             Dictionary<string, string> metadata = new();
 
@@ -63,11 +64,26 @@ namespace SemanticProcess.Business.Services.OrchAgents
                         enableFileSearch: true,
                         metadata: metadata);
 
-            OpenAIAssistantAgent agent = new(assistant, client);
-            //----------------------------------------------------
-            
+            await using Stream stream = File.OpenRead("employees.pdf")!;
+            string fileId = await openClient.UploadAssistantFileAsync(stream, "employees.pdf");
 
-            ConcurrentOrchestration orchestration = new(physicist, chemist, agent);
+            string vectorStoreId =
+                await openClient.CreateVectorStoreAsync(
+                    [fileId],
+                    waitUntilCompleted: true,
+                    metadata: metadata);
+
+            //AgentThread thread = new OpenAIAssistantAgentThread(
+            //    client,
+            //    vectorStoreId: vectorStoreId,
+            //    metadata: metadata);
+
+            OpenAIAssistantAgent assistantAgent = new(assistant, client);
+
+            //----------------------------------------------------
+
+
+            ConcurrentOrchestration orchestration = new(physicist, chemist, assistantAgent);
 
             InProcessRuntime runtime = new InProcessRuntime();
             await runtime.StartAsync();
@@ -79,6 +95,10 @@ namespace SemanticProcess.Business.Services.OrchAgents
             Console.WriteLine($"# RESULT:\n{string.Join("\n\n", output.Select(text => $"{text}"))}");
 
             await runtime.RunUntilIdleAsync();
+
+            await client.DeleteAssistantAsync(assistantAgent.Id);
+            await openClient.DeleteVectorStoreAsync(vectorStoreId);
+            await openClient.DeleteFileAsync(fileId);
         }
     }
 }
