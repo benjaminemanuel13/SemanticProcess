@@ -20,6 +20,7 @@ namespace SemanticProcess.Agents.MultiAgent
             if (del == null)
             {
                 FunctionResult result = await kernel.InvokePromptAsync(question, new(executionSettings));
+
                 return result.ToString();
             }
             else
