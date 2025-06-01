@@ -8,6 +8,10 @@ ProcessService.OpenAIKey = Environment.GetEnvironmentVariable("OPENAIKEY");
 ChatService.OpenAIKey = Environment.GetEnvironmentVariable("OPENAIKEY");
 BaseAgent.OpenAIKey = Environment.GetEnvironmentVariable("OPENAIKEY");
 
+AssistantOpenService.Endpoint = Environment.GetEnvironmentVariable("AZUREOPENAIENDPOINT");
+AssistantOpenService.Key = Environment.GetEnvironmentVariable("AZUREOPENAIKEY");
+AssistantOpenService.Model = "gpt-4o-smile";
+
 CodeService.Endpoint = Environment.GetEnvironmentVariable("AZUREOPENAIENDPOINT");
 CodeService.Key = Environment.GetEnvironmentVariable("AZUREOPENAIKEY");
 CodeService.Model = "gpt-4o-smile";
